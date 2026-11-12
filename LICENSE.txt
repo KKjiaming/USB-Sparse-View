@@ -1,0 +1,3 @@
+LOCAL DRAFT — license and copyright holder pending author confirmation.
+This file is not a license grant. Resolve before submitting this contribution.
+Bundled third-party software retains its original licenses; see third_party/fact-gs/LICENSE.md and the license files in its subdirectories. The USB dataset retains its own terms.
