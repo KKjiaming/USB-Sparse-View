@@ -25,21 +25,38 @@ The USB helper scripts are separated by task:
 
 ## Environment
 
-Start with **section 0 of [USB_Sparse_View.ipynb](USB_Sparse_View.ipynb)** for the installation and configuration walkthrough: system prerequisites, Conda dependencies, local CUDA extensions, kernel selection, input data, and the first FDK run. Continue through notebook sections 1–8 for reconstruction and evaluation. The installation procedure is documented separately from the recorded validation of the existing environment.
+Requires Linux, an NVIDIA GPU, a compatible driver and a C/C++ compiler. **Tested with Python 3.10, PyTorch 2.4.1 and CUDA Toolkit 11.8.**
 
-Linux, an NVIDIA GPU, a compatible driver, and the CUDA toolkit including `nvcc` are needed. The original experiment used CUDA 12.1. From this directory:
+The commands below use `cu118`. On other servers, choose a [PyTorch 2.4.1 CUDA build](https://pytorch.org/get-started/previous-versions/#v241) supported by the driver and GPU, then rebuild the extensions with a matching CUDA Toolkit (including `nvcc`). Other combinations have not been tested.
+
+Run from the notebook directory:
 
 ```bash
-conda env create -f environment.yml
+conda create -n usb-showcase python=3.10 pip -y
 conda activate usb-showcase
 python -m pip install torch==2.4.1 torchvision==0.19.1 --index-url https://download.pytorch.org/whl/cu118
 python -m pip install -r requirements.txt --index-url https://pypi.org/simple
-bash install_extensions.sh
-python -m ipykernel install --user --name usb-showcase --display-name 'Python (USB showcase)'
-jupyter lab USB_Sparse_View.ipynb
 ```
 
-The installation script builds extensions from the bundled source. It does not clone another repository. `environment.yml` creates only Python and pip. Python dependencies are installed with pip from `requirements.txt`, including CIL built from its official v26.0.0 source. The pip workflow uses PyTorch 2.4.1 with CUDA 11.8; CUDA extensions require a matching Toolkit. Existing `fact-gs` environments with these dependencies and extensions can also run the notebook. Register/select the corresponding kernel and use it for all cells.
+Then build the extensions in the same terminal and directory:
+
+```bash
+(
+    set -e
+    nvcc --version
+    MODULES_DIR="$PWD/third_party/fact-gs/fact_gs/submodules"
+    export GLM_HOME="$MODULES_DIR/glm"
+    for module in TIGRE simple_knn fused_3d_tv fused_ssim gs_ct_rasterizer gs_voxelizer; do
+        python -m pip install --no-build-isolation "$MODULES_DIR/$module"
+    done
+)
+```
+
+Select the **Python kernel for `usb-showcase`** before running Section 1. To run only FDK/SIRT in an existing CIL/TIGRE environment, leave FaCT-GS disabled.
+
+Keep the extension sources in `third_party/fact-gs`. If CUDA is not found, set `CUDA_HOME` and add its `bin` directory to `PATH`.
+
+See [Notebook section 1](USB_Sparse_View.ipynb) for setup and continue with the data configuration in section 2.
 
 ## Data and execution
 
@@ -62,7 +79,7 @@ New outputs go to `runs_step_by_step/<views>views/<method>/`. Existing output di
 
 ## Redistribution and submission
 
-Submit this **whole folder**, including `third_party/`, `environment.yml` and `install_extensions.sh`. The vendored source includes upstream examples/assets and is about 80 MB; no build products, model outputs, or Git history are bundled. The `.gitignore` does not exclude vendored dataset-reader code.
+Submit this **whole folder**, including `third_party/` and `requirements.txt`. The vendored source includes upstream examples/assets and is about 80 MB; no build products, model outputs, or Git history are bundled. The `.gitignore` does not exclude vendored dataset-reader code.
 
 All upstream license files and copyright notices remain in place. The dependencies have multiple licenses; do not apply FaCT-GS's top-level MIT license to its R²-Gaussian code or all submodules. See `third_party/fact-gs/LICENSE.md` and the individual license files. Author attribution and the license of the new case-specific code still need confirmation, as do the USB dataset's public source/access and reuse terms. `LICENSE.txt` remains a draft marker, not a license grant. This is an independent draft case; no contribution PR has been submitted to CIL-User-Showcase.
 
