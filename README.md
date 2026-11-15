@@ -25,17 +25,21 @@ The USB helper scripts are separated by task:
 
 ## Environment
 
+Start with **section 0 of [USB_Sparse_View.ipynb](USB_Sparse_View.ipynb)** for the installation and configuration walkthrough: system prerequisites, Conda dependencies, local CUDA extensions, kernel selection, input data, and the first FDK run. Continue through notebook sections 1–8 for reconstruction and evaluation. The installation procedure is documented separately from the recorded validation of the existing environment.
+
 Linux, an NVIDIA GPU, a compatible driver, and the CUDA toolkit including `nvcc` are needed. The original experiment used CUDA 12.1. From this directory:
 
 ```bash
 conda env create -f environment.yml
 conda activate usb-showcase
+python -m pip install torch==2.4.1 torchvision==0.19.1 --index-url https://download.pytorch.org/whl/cu118
+python -m pip install -r requirements.txt --index-url https://pypi.org/simple
 bash install_extensions.sh
 python -m ipykernel install --user --name usb-showcase --display-name 'Python (USB showcase)'
 jupyter lab USB_Sparse_View.ipynb
 ```
 
-The installation script builds extensions from the bundled source. It does not clone another repository. `environment.yml` records the Python/PyTorch/CIL versions used in the experiment; it has not been validated with a fresh Conda solve. Existing `fact-gs` environments with these dependencies and extensions can also run the notebook. Register/select the corresponding kernel and use it for all cells.
+The installation script builds extensions from the bundled source. It does not clone another repository. `environment.yml` creates only Python and pip. Python dependencies are installed with pip from `requirements.txt`, including CIL built from its official v26.0.0 source. The pip workflow uses PyTorch 2.4.1 with CUDA 11.8; CUDA extensions require a matching Toolkit. Existing `fact-gs` environments with these dependencies and extensions can also run the notebook. Register/select the corresponding kernel and use it for all cells.
 
 ## Data and execution
 

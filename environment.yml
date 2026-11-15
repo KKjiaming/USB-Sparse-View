@@ -1,39 +1,6 @@
 name: usb-showcase
 channels:
-  - ccpi/label/dev
-  - ccpi
-  - nvidia
-  - pytorch
-  - conda-forge
   - defaults
 dependencies:
-  - python=3.10.20
+  - python=3.10
   - pip
-  - setuptools
-  - wheel
-  - cython
-  - ninja
-  - cil=26.0.0=py310h8e7c8fa_11
-  - pytorch=2.4.1
-  - torchvision=0.19.1
-  - pytorch-cuda=12.1
-  - numpy=2.0.2
-  - scipy=1.13.1
-  - hydra-core=1.3.2
-  - omegaconf=2.3.0
-  - h5py
-  - matplotlib
-  - pillow
-  - scikit-image
-  - pandas
-  - tqdm
-  - pyyaml
-  - plyfile
-  - jaxtyping
-  - ipykernel
-  - jupyterlab
-  - pip:
-      - opencv-python==4.12.0.88
-      - pydicom
-      - tifffile
-      - pyvista
