@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 Yue Jiaming
+# SPDX-License-Identifier: MIT
+
 __pycache__/
 .ipynb_checkpoints/
 /runs/
@@ -11,3 +14,4 @@ build/
 dist/
 USB_Sparse_View_zh*
 /runs_notebook/
+/third_party/fact-gs/

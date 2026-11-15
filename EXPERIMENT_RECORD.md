@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: 2026 Yue Jiaming
+SPDX-License-Identifier: MIT
+-->
+
 # Experiment 1: 360° Sparse-View 3D Reconstruction with FDK, SIRT, and FaCT-GS
 
 

@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 Yue Jiaming
+# SPDX-License-Identifier: MIT
+
 # Install PyTorch first using the CUDA wheel index shown in the notebook.
 torch==2.4.1
 torchvision==0.19.1
@@ -23,7 +26,8 @@ jaxtyping
 ipykernel
 jupyterlab
 ipywidgets
-zenodo_get
+# CIL's downloader requires the legacy zenodo_get() entry point.
+zenodo_get==1.6.1
 opencv-python==4.12.0.88
 pydicom
 tifffile
